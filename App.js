@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, Text, StyleSheet, Button } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import List from "./components/List/List";
+import Images from "./components/Images/Images";
+import Icons from "./components/Icons/Icons";
+import { useState } from "react";
+/* import Details from "./components/Details/Details";*/
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  //state for harmburger  menu
+  const [icon, setIcon] = useState(true);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name=" "
+          component={List}
+          options={{
+            headerLeft: () => (
+              <Icons
+                type={icon ? "menuunfold" : "menufold"}
+                handleIcons={() => setIcon(!icon)}
+              />
+            ),
+            headerRight: () => <Images />,
+          }}
+        />
+        {/*  <Stack.Screen name="Details" component={Details} /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
